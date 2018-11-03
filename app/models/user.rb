@@ -141,19 +141,25 @@ class User < ApplicationRecord
     merchant_by_speed(quantity, :desc)
   end
 
-  # Top 10 Merchants who sold the most items in the past month
-  # merchant has many order items through items
   def self.most_items_sold_past_month
-    select('users.*, count(users.id) as total_items')
+    select('users.*, sum(order_items.quantity) as total_items').joins(items: :order_items).where('order_items.updated_at >= :start_time AND order_items.updated_at <= :end_time', {
+      start_time: (Time.now - 1.month),
+      end_time: Time.now
+      }).where('order_items.fulfilled = true').group('users.id').order('total_items DESC')
+  end
+
+
+  def self.most_fulfilled_orders_past_month
+    select('users.*, count(order_items.order_id) as total_orders')
     .joins(:items)
-    .joins(items: :order_items)
-    .where('order_items.created_at >= :start_time AND order_items.created_at <= :end_time', {
-      start_time: (Time.now.midnight - 1.month),
-      end_time: Time.now.midnight
+    .joins(items: { order_items: :order })
+    .where('orders.status != ?', :cancelled)
+    .where('order_items.updated_at >= :start_time AND order_items.updated_at <= :end_time', {
+      start_time: (Time.now - 1.month),
+      end_time: Time.now
       })
     .where('order_items.fulfilled = true')
     .group('users.id')
-    .order('total_items')
-    .limit(10)
+    .order('total_orders DESC')
   end
 end

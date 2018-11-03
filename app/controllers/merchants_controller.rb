@@ -1,5 +1,7 @@
 class MerchantsController < ApplicationController
   def index
+    @top_selling_merchants = User.most_items_sold_past_month
+    @most_orders_fulfilled = User.most_fulfilled_orders_past_month
     if current_admin?
       @merchants = User.where(role: :merchant).order(:name)
     else

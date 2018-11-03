@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2018-11-03T11:09:32-06:00">2018-11-03T11:09:32-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2018-11-03T14:47:51-06:00">2018-11-03T14:47:51-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,15 +25,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         3.09
+         3.05
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>40</b> files in total.
-    <b>1881</b> relevant lines. 
-    <span class="green"><b>1881</b> lines covered</span> and
+    <b>1940</b> relevant lines. 
+    <span class="green"><b>1940</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -113,11 +113,11 @@
       <tr>
         <td class="strong"><a href="#de4d2230c6d75df311ce7f26ef63da3a117bb852" class="src_link" title="app/controllers/merchants_controller.rb">app/controllers/merchants_controller.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>23</td>
-        <td>14</td>
-        <td>14</td>
+        <td>31</td>
+        <td>22</td>
+        <td>22</td>
         <td>0</td>
-        <td>2.9</td>
+        <td>3.8</td>
       </tr>
       
       <tr>
@@ -207,7 +207,7 @@
         <td>14</td>
         <td>14</td>
         <td>0</td>
-        <td>8.7</td>
+        <td>9.0</td>
       </tr>
       
       <tr>
@@ -443,9 +443,9 @@
       <tr>
         <td class="strong"><a href="#592c5acce87db6c0b33d8c6b3d51fcb9a5594567" class="src_link" title="spec/models/user_spec.rb">spec/models/user_spec.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>301</td>
-        <td>224</td>
-        <td>224</td>
+        <td>379</td>
+        <td>275</td>
+        <td>275</td>
         <td>0</td>
         <td>1.1</td>
       </tr>
@@ -1647,8 +1647,8 @@
     <h3>app/controllers/merchants_controller.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>14</b> relevant lines. 
-      <span class="green"><b>14</b> lines covered</span> and
+      <b>22</b> relevant lines. 
+      <span class="green"><b>22</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -1671,124 +1671,172 @@
         <li class="covered" data-hits="6" data-linenumber="3">
           <span class="hits">6</span>
           
+          <code class="ruby">    @top_selling_merchants = User.most_items_sold_past_month</code>
+        </li>
+      
+        <li class="covered" data-hits="6" data-linenumber="4">
+          <span class="hits">6</span>
+          
+          <code class="ruby">    @most_orders_fulfilled = User.most_fulfilled_orders_past_month</code>
+        </li>
+      
+        <li class="covered" data-hits="6" data-linenumber="5">
+          <span class="hits">6</span>
+          
           <code class="ruby">    if current_admin?</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="4">
+        <li class="covered" data-hits="4" data-linenumber="6">
           <span class="hits">4</span>
           
           <code class="ruby">      @merchants = User.where(role: :merchant).order(:name)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="5">
+        <li class="never" data-hits="" data-linenumber="7">
           
           
           <code class="ruby">    else</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="6">
+        <li class="covered" data-hits="2" data-linenumber="8">
           <span class="hits">2</span>
           
           <code class="ruby">      @merchants = User.where(role: :merchant, active: true).order(:name)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="7">
-          
-          
-          <code class="ruby">    end </code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="8">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="9">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="10">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def show</code>
-        </li>
-      
-        <li class="covered" data-hits="5" data-linenumber="11">
-          <span class="hits">5</span>
-          
-          <code class="ruby">    render file: &#39;errors/not_found&#39;, status: 404 unless current_user</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="12">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="5" data-linenumber="13">
-          <span class="hits">5</span>
-          
-          <code class="ruby">    @merchant = User.find(params[:id])</code>
-        </li>
-      
-        <li class="covered" data-hits="5" data-linenumber="14">
-          <span class="hits">5</span>
-          
-          <code class="ruby">    if current_admin?</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="15">
-          <span class="hits">4</span>
-          
-          <code class="ruby">      @orders = current_user.merchant_orders</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="16">
-          <span class="hits">4</span>
-          
-          <code class="ruby">      if @merchant.user?</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="17">
-          <span class="hits">1</span>
-          
-          <code class="ruby">        redirect_to user_path(@merchant)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="18">
-          
-          
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="19">
-          <span class="hits">1</span>
-          
-          <code class="ruby">    elsif current_user != @merchant</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="20">
-          <span class="hits">1</span>
-          
-          <code class="ruby">      render file: &#39;errors/not_found&#39;, status: 404</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="21">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="22">
+        <li class="never" data-hits="" data-linenumber="10">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="23">
+        <li class="never" data-hits="" data-linenumber="11">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="12">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def show</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="13">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    render file: &#39;errors/not_found&#39;, status: 404 unless current_user</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="14">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="15">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    @merchant = User.find(params[:id])</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="16">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    @total_items_sold = @merchant.total_items_sold</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="17">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    @top_3_shipping_states = @merchant.top_3_shipping_states</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="18">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    @top_3_shipping_cities = @merchant.top_3_shipping_cities</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="19">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    @most_active_buyer = @merchant.top_active_user</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="20">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    @biggest_order = @merchant.biggest_order</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="21">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    @top_buyers = @merchant.top_buyers</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="22">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    if current_admin?</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="23">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      @orders = current_user.merchant_orders</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="24">
+          <span class="hits">4</span>
+          
+          <code class="ruby">      if @merchant.user?</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="25">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        redirect_to user_path(@merchant)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="26">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="27">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    elsif current_user != @merchant</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="28">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      render file: &#39;errors/not_found&#39;, status: 404</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="29">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="30">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="31">
           
           
           <code class="ruby">end</code>
@@ -3819,14 +3867,14 @@
           <code class="ruby">  def total </code>
         </li>
       
-        <li class="covered" data-hits="42" data-linenumber="9">
-          <span class="hits">42</span>
+        <li class="covered" data-hits="44" data-linenumber="9">
+          <span class="hits">44</span>
           
           <code class="ruby">    oi = order_items.pluck(&quot;sum(quantity*price)&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="42" data-linenumber="10">
-          <span class="hits">42</span>
+        <li class="covered" data-hits="44" data-linenumber="10">
+          <span class="hits">44</span>
           
           <code class="ruby">    oi.sum</code>
         </li>
@@ -16302,8 +16350,8 @@
     <h3>spec/models/user_spec.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>224</b> relevant lines. 
-      <span class="green"><b>224</b> lines covered</span> and
+      <b>275</b> relevant lines. 
+      <span class="green"><b>275</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -16362,7 +16410,7 @@
         <li class="covered" data-hits="1" data-linenumber="9">
           <span class="hits">1</span>
           
-          <code class="ruby">  describe &#39;Validations&#39; do </code>
+          <code class="ruby">  describe &#39;Validations&#39; do</code>
         </li>
       
         <li class="covered" data-hits="2" data-linenumber="10">
@@ -16872,7 +16920,7 @@
         <li class="covered" data-hits="1" data-linenumber="94">
           <span class="hits">1</span>
           
-          <code class="ruby">  describe &#39;Instance Methods&#39; do </code>
+          <code class="ruby">  describe &#39;Instance Methods&#39; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="95">
@@ -16902,7 +16950,7 @@
         <li class="never" data-hits="" data-linenumber="99">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="100">
@@ -16926,7 +16974,7 @@
         <li class="never" data-hits="" data-linenumber="103">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="104">
@@ -16992,7 +17040,7 @@
         <li class="never" data-hits="" data-linenumber="114">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="115">
@@ -17016,7 +17064,7 @@
         <li class="never" data-hits="" data-linenumber="118">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="119">
@@ -17058,7 +17106,7 @@
         <li class="covered" data-hits="1" data-linenumber="125">
           <span class="hits">1</span>
           
-          <code class="ruby">    it &#39;.merchant_for_order(order)&#39; do </code>
+          <code class="ruby">    it &#39;.merchant_for_order(order)&#39; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="126">
@@ -17088,7 +17136,7 @@
         <li class="never" data-hits="" data-linenumber="130">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="131">
@@ -17112,7 +17160,7 @@
         <li class="never" data-hits="" data-linenumber="134">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="135">
@@ -17190,7 +17238,7 @@
         <li class="never" data-hits="" data-linenumber="147">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="148">
@@ -17214,7 +17262,7 @@
         <li class="never" data-hits="" data-linenumber="151">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="152">
@@ -17970,7 +18018,7 @@
         <li class="covered" data-hits="1" data-linenumber="277">
           <span class="hits">1</span>
           
-          <code class="ruby">    it &#39;.top_buyers(3)&#39; do </code>
+          <code class="ruby">    it &#39;.top_buyers(3)&#39; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="278">
@@ -18108,10 +18156,478 @@
         <li class="never" data-hits="" data-linenumber="300">
           
           
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="301">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &quot;class methods&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="302">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &quot;.most_fulfilled_orders_past_month&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="303">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        admin = create(:admin)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="304">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        user = create(:user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="305">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        merchant_1 = create(:merchant)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="306">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="307">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        merchant_2, merchant_3, merchant_4 = create_list(:merchant, 3)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="308">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="309">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        item_1 = create(:item, user: merchant_1)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="310">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        item_2 = create(:item, user: merchant_2)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="311">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        item_3 = create(:item, user: merchant_3)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="312">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        item_4 = create(:item, user: merchant_4)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="313">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create_list(:item, 10, user: merchant_1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="314">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="315">
+          
+          
+          <code class="ruby">        #Merchant_1: 2 orders  - 3rd place</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="316">
+          
+          
+          <code class="ruby">        #Merchant_2: 3 orders - 2nd place</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="317">
+          
+          
+          <code class="ruby">        #Merchant_3: 1 order - 4th place</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="318">
+          
+          
+          <code class="ruby">        #Merchant_4: 4 orders - 1st place</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="319">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        order = create(:completed_order, user: user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="320">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_1, price: 1, quantity: 10)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="321">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 5)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="322">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_4, price: 4, quantity: 1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="323">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="324">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        order = create(:completed_order, user: user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="325">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_1, price: 1, quantity: 9)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="326">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 4)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="327">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="328">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="329">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        order = create(:completed_order, user: user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="330">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 1)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="331">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_3, price: 3, quantity: 2)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="332">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="333">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="334">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        order = create(:completed_order, user: user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="335">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="336">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="337">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        expect(User.most_fulfilled_orders_past_month).to eq([merchant_4, merchant_2, merchant_1, merchant_3])</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="338">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="339">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="340">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &quot;.most_items_sold_past_month&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="341">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        admin = create(:admin)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="342">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        user = create(:user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="343">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        merchant_1 = create(:merchant)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="344">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="345">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        merchant_2, merchant_3, merchant_4 = create_list(:merchant, 3)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="346">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="347">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        item_1 = create(:item, user: merchant_1)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="348">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        item_2 = create(:item, user: merchant_2)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="349">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        item_3 = create(:item, user: merchant_3)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="350">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        item_4 = create(:item, user: merchant_4)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="351">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create_list(:item, 10, user: merchant_1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="352">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="353">
+          
+          
+          <code class="ruby">        #Merchant_1: 19 total items sold  - 1st place</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="354">
+          
+          
+          <code class="ruby">        #Merchant_2: 10 total items sold - 2nd place</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="355">
+          
+          
+          <code class="ruby">        #Merchant_3: 2 total items sold - 3rd place</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="356">
+          
+          
+          <code class="ruby">        #Merchant_4: 4 total items sold - 4th place</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="357">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        order = create(:completed_order, user: user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="358">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_1, price: 1, quantity: 10)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="359">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 5)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="360">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_4, price: 4, quantity: 1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="361">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="362">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        order = create(:completed_order, user: user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="363">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_1, price: 1, quantity: 9)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="364">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 4)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="365">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="366">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="367">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        order = create(:completed_order, user: user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="368">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 1)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="369">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_3, price: 3, quantity: 2)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="370">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="371">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="372">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        order = create(:completed_order, user: user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="373">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="374">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="375">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        expect(User.most_items_sold_past_month).to eq([merchant_1, merchant_2, merchant_4, merchant_3])</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="376">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="377">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="378">
+          
+          
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="301">
+        <li class="never" data-hits="" data-linenumber="379">
           
           
           <code class="ruby">end</code>

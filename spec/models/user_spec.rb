@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:items) }
   end
 
-  describe 'Validations' do 
+  describe 'Validations' do
     it { should validate_presence_of :email }
     it { should validate_uniqueness_of :email }
     it { should validate_presence_of :name }
@@ -91,16 +91,16 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'Instance Methods' do 
+  describe 'Instance Methods' do
     it '.merchant_items' do
       user = create(:user)
       merchant = create(:merchant)
       item_1, item_2, item_3, item_4, item_5 = create_list(:item, 5, user: merchant)
-      
+
       order_1 = create(:order, user: user)
       create(:order_item, order: order_1, item: item_1)
       create(:order_item, order: order_1, item: item_2)
-  
+
       order_2 = create(:completed_order, user: user)
       create(:fulfilled_order_item, order: order_2, item: item_2)
       create(:fulfilled_order_item, order: order_2, item: item_3)
@@ -111,27 +111,27 @@ RSpec.describe User, type: :model do
       user = create(:user)
       merchant = create(:merchant)
       item_1, item_2, item_3, item_4, item_5 = create_list(:item, 5, user: merchant)
-      
+
       order_1 = create(:order, user: user)
       create(:order_item, order: order_1, item: item_1)
       create(:order_item, order: order_1, item: item_2)
-  
+
       order_2 = create(:completed_order, user: user)
       create(:fulfilled_order_item, order: order_2, item: item_2)
       create(:fulfilled_order_item, order: order_2, item: item_3)
 
       expect(merchant.merchant_orders(:pending)).to eq([order_1])
     end
-    it '.merchant_for_order(order)' do 
+    it '.merchant_for_order(order)' do
       user = create(:user)
       merchant_1, merchant_2 = create_list(:merchant, 2)
       item_1, item_2 = create_list(:item, 5, user: merchant_1)
       item_3, item_4 = create_list(:item, 5, user: merchant_2)
-      
+
       order_1 = create(:order, user: user)
       create(:order_item, order: order_1, item: item_1)
       create(:order_item, order: order_1, item: item_2)
-  
+
       order_2 = create(:order, user: user)
       create(:order_item, order: order_2, item: item_3)
       create(:order_item, order: order_2, item: item_4)
@@ -144,11 +144,11 @@ RSpec.describe User, type: :model do
       merchant_1, merchant_2 = create_list(:merchant, 2)
       item_1, item_2 = create_list(:item, 5, user: merchant_1)
       item_3, item_4 = create_list(:item, 5, user: merchant_2)
-      
+
       order_1 = create(:completed_order, status: :completed, user: user)
       oi_1 = create(:fulfilled_order_item, order: order_1, item: item_1)
       oi_2 = create(:fulfilled_order_item, order: order_1, item: item_3)
-  
+
       order_2 = create(:order, user: user)
       oi_3 = create(:fulfilled_order_item, order: order_2, item: item_2)
       oi_4 = create(:order_item, order: order_2, item: item_4)
@@ -274,7 +274,7 @@ RSpec.describe User, type: :model do
       create(:fulfilled_order_item, quantity: 1000, order: order_1, item: item_1)
       expect(merchant_1.biggest_order).to eq(order_1)
     end
-    it '.top_buyers(3)' do 
+    it '.top_buyers(3)' do
       user_1 = create(:user, city: 'Denver')
       user_2 = create(:user, city: 'Houston')
       user_3 = create(:user, city: 'Atlanta')
@@ -296,6 +296,84 @@ RSpec.describe User, type: :model do
       create(:fulfilled_order_item, quantity: 10, price: 10, order: order_3, item: item_2)
 
       expect(merchant_1.top_buyers(3)).to eq([user_2, user_1, user_3])
+    end
+
+    describe "class methods" do
+      it ".most_fulfilled_orders_past_month" do
+        admin = create(:admin)
+        user = create(:user)
+        merchant_1 = create(:merchant)
+
+        merchant_2, merchant_3, merchant_4 = create_list(:merchant, 3)
+
+        item_1 = create(:item, user: merchant_1)
+        item_2 = create(:item, user: merchant_2)
+        item_3 = create(:item, user: merchant_3)
+        item_4 = create(:item, user: merchant_4)
+        create_list(:item, 10, user: merchant_1)
+
+        #Merchant_1: 2 orders  - 3rd place
+        #Merchant_2: 3 orders - 2nd place
+        #Merchant_3: 1 order - 4th place
+        #Merchant_4: 4 orders - 1st place
+        order = create(:completed_order, user: user)
+        create(:fulfilled_order_item, order: order, item: item_1, price: 1, quantity: 10)
+        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 5)
+        create(:fulfilled_order_item, order: order, item: item_4, price: 4, quantity: 1)
+
+        order = create(:completed_order, user: user)
+        create(:fulfilled_order_item, order: order, item: item_1, price: 1, quantity: 9)
+        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 4)
+        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)
+
+        order = create(:completed_order, user: user)
+        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 1)
+        create(:fulfilled_order_item, order: order, item: item_3, price: 3, quantity: 2)
+        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)
+
+        order = create(:completed_order, user: user)
+        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)
+
+        expect(User.most_fulfilled_orders_past_month).to eq([merchant_4, merchant_2, merchant_1, merchant_3])
+      end
+
+      it ".most_items_sold_past_month" do
+        admin = create(:admin)
+        user = create(:user)
+        merchant_1 = create(:merchant)
+
+        merchant_2, merchant_3, merchant_4 = create_list(:merchant, 3)
+
+        item_1 = create(:item, user: merchant_1)
+        item_2 = create(:item, user: merchant_2)
+        item_3 = create(:item, user: merchant_3)
+        item_4 = create(:item, user: merchant_4)
+        create_list(:item, 10, user: merchant_1)
+
+        #Merchant_1: 19 total items sold  - 1st place
+        #Merchant_2: 10 total items sold - 2nd place
+        #Merchant_3: 2 total items sold - 3rd place
+        #Merchant_4: 4 total items sold - 4th place
+        order = create(:completed_order, user: user)
+        create(:fulfilled_order_item, order: order, item: item_1, price: 1, quantity: 10)
+        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 5)
+        create(:fulfilled_order_item, order: order, item: item_4, price: 4, quantity: 1)
+
+        order = create(:completed_order, user: user)
+        create(:fulfilled_order_item, order: order, item: item_1, price: 1, quantity: 9)
+        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 4)
+        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)
+
+        order = create(:completed_order, user: user)
+        create(:fulfilled_order_item, order: order, item: item_2, price: 2, quantity: 1)
+        create(:fulfilled_order_item, order: order, item: item_3, price: 3, quantity: 2)
+        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)
+
+        order = create(:completed_order, user: user)
+        create(:fulfilled_order_item, order: order, item: item_4, price: 2, quantity: 1)
+
+        expect(User.most_items_sold_past_month).to eq([merchant_1, merchant_2, merchant_4, merchant_3])
+      end
     end
   end
 end

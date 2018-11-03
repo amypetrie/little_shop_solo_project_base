@@ -6,7 +6,7 @@
     <div class="stat_1">
       <p><b>Top 10 Merchants who sold the most items in the past month:</b></p>
       <ol>
-        <% @merchants.most_items_sold_past_month.each do |merchant|%>
+        <% @top_selling_merchants.each do |merchant|%>
           <li><%=merchant.name%></li>
         <%end%>
       </ol>
@@ -14,10 +14,11 @@
     <div class="stat_2">
       <p><b>Top 10 Merchants who fulfilled non-cancelled orders in the past month:</b></p>
       <ol>
-
-
+        <% @most_orders_fulfilled.each do |merchant| %>
+        <li><%=merchant.name%></li>
+        <% end %>
       </ol>
-  </div>
+    </div>
   </div>
 </div>
 
