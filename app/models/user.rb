@@ -28,7 +28,7 @@ class User < ApplicationRecord
       .where("order_items.fulfilled=?", true)
       .sum("order_items.quantity")
   end
-  
+
   def total_inventory
     items.sum(:inventory)
   end
@@ -120,8 +120,8 @@ class User < ApplicationRecord
   end
 
   def self.merchant_by_speed(quantity, order)
-    select("distinct users.*, 
-      CASE 
+    select("distinct users.*,
+      CASE
         WHEN order_items.updated_at > order_items.created_at THEN coalesce(EXTRACT(EPOCH FROM order_items.updated_at) - EXTRACT(EPOCH FROM order_items.created_at),0)
         ELSE 1000000000 END as time_diff")
       .joins(:items)
@@ -139,5 +139,21 @@ class User < ApplicationRecord
 
   def self.slowest_merchants(quantity)
     merchant_by_speed(quantity, :desc)
+  end
+
+  # Top 10 Merchants who sold the most items in the past month
+  # merchant has many order items through items
+  def self.most_items_sold_past_month
+    select('users.*, count(users.id) as total_items')
+    .joins(:items)
+    .joins(items: :order_items)
+    .where('order_items.created_at >= :start_time AND order_items.created_at <= :end_time', {
+      start_time: (Time.now.midnight - 1.month),
+      end_time: Time.now.midnight
+      })
+    .where('order_items.fulfilled = true')
+    .group('users.id')
+    .order('total_items')
+    .limit(10)
   end
 end
