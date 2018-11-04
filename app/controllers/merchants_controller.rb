@@ -4,7 +4,7 @@ class MerchantsController < ApplicationController
     @top_selling_merchants = @merchants.most_items_sold_past_month
     @most_orders_fulfilled = @merchants.most_fulfilled_orders_past_month
     if current_user || current_admin?
-      @fastest_merchants_to_user_city = User.fastest_merchants_to_user_city(current_user)
+      # @fastest_merchants_by_city = User.fastest_merchants_by_city
       @fastest_merchants_to_user_state = current_user.fastest_merchants_to_user_state
       @merchants = User.where(role: :merchant).order(:name) if current_admin?
     end

@@ -13,13 +13,15 @@ class User < ApplicationRecord
   end
 
 #top 5 merchants who have fulfilled items the fastest to my city
-  def self.fastest_merchants_to_user_city(user)
+
+# avg(order_items.updated_at - order_items.created_at) as fulfillment_time
+  def self.fastest_merchants_by_city
     select('users.*, avg(order_items.updated_at - order_items.created_at) as fulfillment_time')
-    .joins(items: {order_items: :order})
+    .joins(items: :order_items)
     .where('order_items.fulfilled = true')
     .where('users.id IN (?)',
-      select('users.id')
-      .joins(:orders)
+      self.orders
+      .joins(:user)
       .where('users.city = ?', user.city))
     .group('users.id')
     .order('fulfillment_time ASC')
@@ -182,4 +184,11 @@ class User < ApplicationRecord
     .group('users.id')
     .order('total_orders DESC')
   end
+
+  # Merchants can generate a list of email addresses for all existing users 
+  # who are not disabled
+  # who have ordered items from this merchant in the past.
+  #
+  # Merchants can generate a list of all new users
+  # who have never ordered from them before.
 end
