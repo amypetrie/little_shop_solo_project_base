@@ -17,6 +17,30 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Class Methods' do
+
+    it 'fastest_merchants_to_user_city' do
+      user = create(:user)
+      merchant_1, merchant_2, merchant_3, merchant_4 = create_list(:merchant, 4)
+      item_1 = create(:item, user: merchant_1)
+      item_2 = create(:item, user: merchant_2)
+      item_3 = create(:item, user: merchant_3)
+      item_4 = create(:item, user: merchant_4)
+
+      order = create(:completed_order, user: user)
+      create(:fulfilled_order_item, order: order, item: item_1, price: 20000, quantity: 1)
+
+      order = create(:completed_order, user: user)
+      create(:fulfilled_order_item, order: order, item: item_2, price: 2000, quantity: 1)
+
+      order = create(:completed_order, user: user)
+      create(:fulfilled_order_item, order: order, item: item_3, price: 200000, quantity: 1)
+
+      order = create(:completed_order, user: user)
+      create(:fulfilled_order_item, order: order, item: item_4, price: 200, quantity: 1)
+
+      expect(User.fastest_merchants_to_user_city(user)).to eq(["s"])
+    end
+
     it '.top_merchants(quantity)' do
       user = create(:user)
       merchant_1, merchant_2, merchant_3, merchant_4 = create_list(:merchant, 4)

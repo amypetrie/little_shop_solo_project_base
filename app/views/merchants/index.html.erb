@@ -19,6 +19,14 @@
         <% end %>
       </ol>
     </div>
+    <div class="stat_3">
+      <p><b>Top 5 fastest merchants fulfilling orders to <%=current_user.city%></b></p>
+      <ol>
+        <% @fastest_merchants_to_user_city.each do |merchant| %>
+        <li><%=merchant.name%></li>
+        <% end %>
+      </ol>
+    </div>
   </div>
 </div>
 

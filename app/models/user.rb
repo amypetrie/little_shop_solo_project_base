@@ -8,6 +8,22 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   enum role: %w(user merchant admin)
+#top 5 merchants who have fulfilled items the fastest to my state
+  def fastest_merchants_to_user_state
+  end
+
+#top 5 merchants who have fulfilled items the fastest to my city
+  def self.fastest_merchants_to_user_city(user)
+    select('users.*, avg(order_items.updated_at - order_items.created_at) as fulfillment_time')
+    .joins(items: :order_items)
+    .where('order_items.fulfilled = true')
+    .where(
+      Order.select('user_id')
+      .joins(:user)
+      .where('users.city = ?', user.city))
+    .group('users.id')
+    .order('fulfillment_time ASC')
+  end
 
   def merchant_orders(status=nil)
     if status.nil?
@@ -142,10 +158,14 @@ class User < ApplicationRecord
   end
 
   def self.most_items_sold_past_month
-    select('users.*, sum(order_items.quantity) as total_items').joins(items: :order_items).where('order_items.updated_at >= :start_time AND order_items.updated_at <= :end_time', {
+    select('users.*, sum(order_items.quantity) as total_items')
+    .joins(items: :order_items)
+    .where('order_items.updated_at >= :start_time AND order_items.updated_at <= :end_time', {
       start_time: (Time.now - 1.month),
       end_time: Time.now
-      }).where('order_items.fulfilled = true').group('users.id').order('total_items DESC')
+    })
+    .where('order_items.fulfilled = true')
+    .group('users.id').order('total_items DESC')
   end
 
 

@@ -5,7 +5,8 @@ class Order < ApplicationRecord
 
   validates_presence_of :status
 
-  def total 
+
+  def total
     oi = order_items.pluck("sum(quantity*price)")
     oi.sum
   end
