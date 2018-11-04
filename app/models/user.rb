@@ -15,11 +15,11 @@ class User < ApplicationRecord
 #top 5 merchants who have fulfilled items the fastest to my city
   def self.fastest_merchants_to_user_city(user)
     select('users.*, avg(order_items.updated_at - order_items.created_at) as fulfillment_time')
-    .joins(items: :order_items)
+    .joins(items: {order_items: :order})
     .where('order_items.fulfilled = true')
-    .where(
-      Order.select('user_id')
-      .joins(:user)
+    .where('users.id IN (?)',
+      select('users.id')
+      .joins(:orders)
       .where('users.city = ?', user.city))
     .group('users.id')
     .order('fulfillment_time ASC')
