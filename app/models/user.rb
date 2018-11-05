@@ -15,16 +15,14 @@ class User < ApplicationRecord
 #top 5 merchants who have fulfilled items the fastest to my city
 
 # avg(order_items.updated_at - order_items.created_at) as fulfillment_time
-  def self.fastest_merchants_by_city
-    select('users.*, avg(order_items.updated_at - order_items.created_at) as fulfillment_time')
-    .joins(items: :order_items)
-    .where('order_items.fulfilled = true')
-    .where('users.id IN (?)',
-      self.orders
-      .joins(:user)
-      .where('users.city = ?', user.city))
-    .group('users.id')
-    .order('fulfillment_time ASC')
+  def fastest_merchants_by_user_city
+    User
+    .joins(orders: :order_items)
+    .where('users.city = ?', self.city)
+    .joins(items: :user)
+    .where('items.user_id = users.id')
+    .where('users.active = true')
+    .distinct
   end
 
   def merchant_orders(status=nil)
@@ -185,10 +183,36 @@ class User < ApplicationRecord
     .order('total_orders DESC')
   end
 
-  # Merchants can generate a list of email addresses for all existing users 
+  # Merchants can generate a list of email addresses for all existing users
   # who are not disabled
   # who have ordered items from this merchant in the past.
-  #
+  def emails_of_customers
+    # self.items
+    # .joins(:order_items)
+    # .where('order_items.item_id = items.id')
+    # .joins(orders: :user)
+    # .where('users.active = true')
+    # .distinct
+    # .pluck('users.email')
+    User
+    .joins(orders: {order_items: :item})
+    .where('items.user_id = ?', self.id)
+    .joins(orders: :user)
+    .where('users.active = true')
+    .distinct
+    .pluck('users.email')
+  end
   # Merchants can generate a list of all new users
   # who have never ordered from them before.
+  def users_without_orders
+    User
+    .joins(orders: {order_items: :item})
+    .where.not('items.user_id = (?)', self.id)
+    .joins(orders: :user)
+    .where('users.active = true')
+    .distinct
+    .select('users.*')
+    .order(:name)
+  end
+
 end

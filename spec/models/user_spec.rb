@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
 
   describe 'Class Methods' do
 
-    it 'fastest_merchants_to_user_city' do
+    it 'fastest_merchants_by_user_city' do
       user = create(:user)
       merchant_1, merchant_2, merchant_3, merchant_4 = create_list(:merchant, 4)
       item_1 = create(:item, user: merchant_1)
@@ -38,7 +38,7 @@ RSpec.describe User, type: :model do
       order = create(:completed_order, user: user)
       create(:fulfilled_order_item, order: order, item: item_4, price: 200, quantity: 1)
 
-      expect(User.fastest_merchants_to_user_city(user)).to eq(["s"])
+      expect(user.fastest_merchants_by_user_city).to eq(["s"])
     end
 
     it '.top_merchants(quantity)' do
@@ -116,6 +116,73 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Instance Methods' do
+    it '.users_without_orders' do
+      user_1, user_2, user_3, user_4 = create_list(:user, 4)
+
+      merchant_1, merchant_2, merchant_3, merchant_4 = create_list(:merchant, 4)
+
+      item_1 = create(:item, user: merchant_1)
+      item_2 = create(:item, user: merchant_2)
+      item_3 = create(:item, user: merchant_3)
+      item_4 = create(:item, user: merchant_4)
+
+      item_5 = create(:item, user: merchant_1)
+      item_6 = create(:item, user: merchant_2)
+      item_7 = create(:item, user: merchant_3)
+      item_8 = create(:item, user: merchant_4)
+
+      order = create(:completed_order, user: user_1)
+      create(:fulfilled_order_item, order: order, item: item_1, price: 20000, quantity: 1)
+      create(:fulfilled_order_item, order: order, item: item_5, price: 20000, quantity: 1)
+
+      order = create(:completed_order, user: user_2)
+      create(:fulfilled_order_item, order: order, item: item_1, price: 20000, quantity: 1)
+      create(:fulfilled_order_item, order: order, item: item_5, price: 20000, quantity: 1)
+
+      order = create(:completed_order, user: user_3)
+      create(:fulfilled_order_item, order: order, item: item_6, price: 20000, quantity: 1)
+      create(:fulfilled_order_item, order: order, item: item_7, price: 20000, quantity: 1)
+
+      order = create(:completed_order, user: user_4)
+      create(:fulfilled_order_item, order: order, item: item_3, price: 20000, quantity: 1)
+      create(:fulfilled_order_item, order: order, item: item_4, price: 20000, quantity: 1)
+
+      expect(merchant_1.users_without_orders).to include(user_3, user_4)
+      expect(merchant_1.users_without_orders).to_not include(user_1, user_2)
+      expect(merchant_1.users_without_orders.count).to eq(2)
+    end
+    it 'emails_of_customers' do
+      user_1, user_2, user_3, user_4 = create_list(:user, 4)
+      merchant_1, merchant_2, merchant_3, merchant_4 = create_list(:merchant, 4)
+      item_1 = create(:item, user: merchant_1)
+      item_2 = create(:item, user: merchant_2)
+      item_3 = create(:item, user: merchant_3)
+      item_4 = create(:item, user: merchant_4)
+
+      item_5 = create(:item, user: merchant_1)
+      item_6 = create(:item, user: merchant_2)
+      item_7 = create(:item, user: merchant_3)
+      item_8 = create(:item, user: merchant_4)
+
+      order = create(:completed_order, user: user_1)
+      create(:fulfilled_order_item, order: order, item: item_1, price: 20000, quantity: 1)
+      create(:fulfilled_order_item, order: order, item: item_5, price: 20000, quantity: 1)
+
+      order = create(:completed_order, user: user_2)
+      create(:fulfilled_order_item, order: order, item: item_1, price: 20000, quantity: 1)
+      create(:fulfilled_order_item, order: order, item: item_5, price: 20000, quantity: 1)
+
+      order = create(:completed_order, user: user_3)
+      create(:fulfilled_order_item, order: order, item: item_1, price: 20000, quantity: 1)
+      create(:fulfilled_order_item, order: order, item: item_5, price: 20000, quantity: 1)
+
+      order = create(:order, user: user_4)
+      create(:order_item, order: order, item: item_1, price: 20000, quantity: 1, fulfilled: false)
+      create(:order_item, order: order, item: item_5, price: 20000, quantity: 1, fulfilled: false)
+
+      expect(merchant_1.emails_of_customers).to eq([user_1.email, user_2.email, user_3.email, user_4.email])
+    end
+
     it '.merchant_items' do
       user = create(:user)
       merchant = create(:merchant)
