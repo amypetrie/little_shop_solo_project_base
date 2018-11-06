@@ -18,34 +18,6 @@ RSpec.describe User, type: :model do
 
   describe 'Class Methods' do
 
-    xit 'fastest_merchants_by_user_city' do
-      user_1, user_2 = create_list(:user, 2, city: "Chicago")
-      user_3 = create(:user, city: "Denver")
-
-      merchant_1, merchant_2, merchant_3, merchant_4 = create_list(:merchant, 4)
-      item_1 = create(:item, user: merchant_1)
-      item_2 = create(:item, user: merchant_2)
-      item_3 = create(:item, user: merchant_3)
-      item_4 = create(:item, user: merchant_4)
-
-      order = create(:completed_order, user: user_1)
-      create(:fulfilled_order_item, order: order, item: item_1, price: 20000, quantity: 1)
-
-      order = create(:completed_order, user: user_1)
-      create(:fulfilled_order_item, order: order, item: item_2, price: 2000, quantity: 1)
-
-      order = create(:completed_order, user: user_2)
-      create(:fulfilled_order_item, order: order, item: item_3, price: 200000, quantity: 1)
-
-      order = create(:completed_order, user: user_2)
-      create(:fulfilled_order_item, order: order, item: item_4, price: 200, quantity: 1)
-
-      order = create(:completed_order, user: user_3)
-      create(:fulfilled_order_item, order: order, item: item_4, price: 200, quantity: 1)
-
-      expect(user_1.order_items_by_user_city).to include(merchant_1, merchant_1, merchant_3, merchant_4)
-    end
-
     it '.to_csv' do
       user_1, user_2, user_3, user_4 = create_list(:user, 4)
 
@@ -135,6 +107,67 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Instance Methods' do
+
+    xit '.order_item_ids_by_city' do
+        user_1, user_2 = create_list(:user, 2, city: "Chicago")
+        user_3 = create(:user, city: "Denver")
+
+        merchant_1, merchant_2, merchant_3, merchant_4, merchant_5 = create_list(:merchant, 5)
+        item_1 = create(:item, user: merchant_1)
+        item_2 = create(:item, user: merchant_2)
+        item_3 = create(:item, user: merchant_3)
+        item_4 = create(:item, user: merchant_4)
+
+        order_1 = create(:completed_order, user: user_1)
+        oi_1 = create(:fulfilled_order_item, order: order_1, item: item_1, price: 20000, quantity: 1)
+
+        order_2 = create(:completed_order, user: user_1)
+        oi_2 = create(:fulfilled_order_item, order: order_2, item: item_2, price: 2000, quantity: 1)
+
+        order_3 = create(:completed_order, user: user_2)
+        oi_3 = create(:fulfilled_order_item, order: order_3, item: item_3, price: 200000, quantity: 1)
+
+        order_4 = create(:completed_order, user: user_2)
+        oi_4 = create(:fulfilled_order_item, order: order_4, item: item_4, price: 200, quantity: 1)
+
+        order_5 = create(:completed_order, user: user_3)
+        oi_5 = create(:fulfilled_order_item, order: order_5, item: item_4, price: 200, quantity: 1)
+
+        expect(user_1.order_items_by_city).to include(oi_1, oi_2, oi_3, oi_4)
+
+        # expect(user_1.fastest_merchants_to_user_city).to include(merchant_1, merchant_2, merchant_3, merchant_4)
+        expect(user_1.fastest_city_merchants_by_order_item).to include(merchant_1, merchant_2, merchant_3, merchant_4)
+    end
+
+    xit 'fastest_merchants_to_user_city' do
+      user_1, user_2 = create_list(:user, 2, city: "Chicago")
+      user_3 = create(:user, city: "Denver")
+
+      merchant_1, merchant_2, merchant_3, merchant_4, merchant_5 = create_list(:merchant, 5)
+      item_1 = create(:item, user: merchant_1)
+      item_2 = create(:item, user: merchant_2)
+      item_3 = create(:item, user: merchant_3)
+      item_4 = create(:item, user: merchant_4)
+
+      order = create(:completed_order, user: user_1)
+      create(:fulfilled_order_item, order: order, item: item_1, price: 20000, quantity: 1)
+
+      order = create(:completed_order, user: user_1)
+      create(:fulfilled_order_item, order: order, item: item_2, price: 2000, quantity: 1)
+
+      order = create(:completed_order, user: user_2)
+      create(:fulfilled_order_item, order: order, item: item_3, price: 200000, quantity: 1)
+
+      order = create(:completed_order, user: user_2)
+      create(:fulfilled_order_item, order: order, item: item_4, price: 200, quantity: 1)
+
+      order = create(:completed_order, user: user_3)
+      create(:fulfilled_order_item, order: order, item: item_4, price: 200, quantity: 1)
+
+      expect(user_1.fastest_merchants_to_user_city).to include(merchant_1, merchant_1, merchant_3, merchant_4)
+      expect(user_1.fastest_merchants_to_user_city).to_not include(merchant_5)
+    end
+
     it '.non_customers' do
       user_1, user_2, user_3, user_4 = create_list(:user, 4)
 

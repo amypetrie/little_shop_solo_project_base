@@ -27,18 +27,24 @@ class DashboardController < ApplicationController
   end
 
   def customer_emails
-    @customers = current_user.customers
-    respond_to do |format|
-      format.html
-      format.csv { send_data @customers.to_csv }
+    if current_user.merchant?
+    @merchant = current_user
+    @customers = @merchant.customers
+      respond_to do |format|
+        format.html
+        format.csv { send_data @customers.to_csv }
+      end
     end
   end
 
   def non_customer_emails
-    @non_customers = current_user.non_customers
-    respond_to do |format|
-      format.html
-      format.csv { send_data @non_customers.to_csv }
+    if current_user.merchant?
+    @merchant = current_user
+    @non_customers = @merchant.non_customers
+      respond_to do |format|
+        format.html
+        format.csv { send_data @non_customers.to_csv }
+      end
     end
   end
 end
