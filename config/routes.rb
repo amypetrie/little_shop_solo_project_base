@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   end
 
   get '/dashboard', to: 'dashboard#show'
-
+  post '/dashboard/customer_emails', to: 'dashboard#customer_emails', as: 'customer_emails'
+  post '/dashboard/non_customer_emails', to: 'dashboard#non_customer_emails', as: 'non_customer_emails'
   namespace :dashboard do
     resources :orders, only: [:index]
     resources :items, only: [:index]

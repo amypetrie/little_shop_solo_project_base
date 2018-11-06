@@ -19,12 +19,14 @@
         <% end %>
       </ol>
     </div>
+    <% if current_admin? %>
     <div class="stat_3">
       <p><b>Top 5 fastest merchants fulfilling orders to <%=current_user.city%></b></p>
       <ol>
 
       </ol>
     </div>
+    <% end %>
   </div>
 </div>
 

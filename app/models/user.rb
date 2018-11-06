@@ -8,22 +8,19 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   enum role: %w(user merchant admin)
-#top 5 merchants who have fulfilled items the fastest to my state
   def fastest_merchants_to_user_state
   end
 
 #top 5 merchants who have fulfilled items the fastest to my city
 
 # avg(order_items.updated_at - order_items.created_at) as fulfillment_time
-  def fastest_merchants_by_user_city
-    User
-    .joins(orders: :order_items)
-    .where('users.city = ?', self.city)
-    .joins(items: :user)
-    .where('items.user_id = users.id')
-    .where('users.active = true')
-    .distinct
-  end
+  # def order_items_by_user_city
+  #   User.select('order_items.*').joins(:orders).joins(:items)order_items:
+  #   OrderItem.where('order_items.order_id = orders.id'))
+  #   .select('user.*').where('items.user_id = users.id')
+  # end
+
+    # where('users.city = (?)', self.city).pluck('order_item.item_id')
 
   def merchant_orders(status=nil)
     if status.nil?
@@ -183,36 +180,32 @@ class User < ApplicationRecord
     .order('total_orders DESC')
   end
 
-  # Merchants can generate a list of email addresses for all existing users
-  # who are not disabled
-  # who have ordered items from this merchant in the past.
-  def emails_of_customers
-    # self.items
-    # .joins(:order_items)
-    # .where('order_items.item_id = items.id')
-    # .joins(orders: :user)
-    # .where('users.active = true')
-    # .distinct
-    # .pluck('users.email')
+  def customers
     User
     .joins(orders: {order_items: :item})
     .where('items.user_id = ?', self.id)
     .joins(orders: :user)
     .where('users.active = true')
     .distinct
-    .pluck('users.email')
   end
-  # Merchants can generate a list of all new users
-  # who have never ordered from them before.
-  def users_without_orders
+
+  def non_customers
+    customer_ids = self.customers.pluck(:id)
     User
-    .joins(orders: {order_items: :item})
-    .where.not('items.user_id = (?)', self.id)
-    .joins(orders: :user)
-    .where('users.active = true')
-    .distinct
     .select('users.*')
-    .order(:name)
+    .where('users.active = true')
+    .where.not(id: self.id)
+    .where.not(id: customer_ids)
+  end
+
+  def self.to_csv
+    attributes = %w{email name}
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      self.all.each do |user|
+        csv << attributes.map{ |attr| user.send(attr) }
+      end
+    end
   end
 
 end

@@ -25,4 +25,20 @@ class DashboardController < ApplicationController
       render file: 'errors/not_found', status: 404
     end
   end
+
+  def customer_emails
+    @customers = current_user.customers
+    respond_to do |format|
+      format.html
+      format.csv { send_data @customers.to_csv }
+    end
+  end
+
+  def non_customer_emails
+    @non_customers = current_user.non_customers
+    respond_to do |format|
+      format.html
+      format.csv { send_data @non_customers.to_csv }
+    end
+  end
 end
