@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Merchant Stats' do
-  context 'as a merchant, viewing my dashboard' do 
+  context 'as a merchant, viewing my dashboard' do
     before(:each) do
       @merchant_1 = create(:merchant)
       @merchant_2 = create(:merchant)
@@ -110,7 +110,7 @@ RSpec.describe 'Merchant Stats' do
         end
       end
     end
-    it 'shows top 3 spending users who bought my items' do 
+    it 'shows top 3 spending users who bought my items' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_1)
 
       visit dashboard_path
