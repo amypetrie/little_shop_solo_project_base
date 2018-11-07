@@ -25,11 +25,6 @@ RSpec.describe User, type: :model do
       expect(User.to_csv).to include(user_2.email)
       expect(User.to_csv).to include(user_3.email)
       expect(User.to_csv).to include(user_4.email)
-
-      expect(User.to_csv).to include(user_1.name)
-      expect(User.to_csv).to include(user_2.name)
-      expect(User.to_csv).to include(user_3.name)
-      expect(User.to_csv).to include(user_4.name)
     end
 
     it '.top_merchants(quantity)' do

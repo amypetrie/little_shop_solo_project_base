@@ -49,11 +49,6 @@ require 'rails_helper'
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_1)
 
       click_on("Export Customer Emails")
-      expect(page).to have_content(user_1.name)
-      expect(page).to have_content(user_2.name)
-      expect(page).to have_content(user_3.name)
-      expect(page).to have_content(user_4.name)
-
       expect(page).to have_content(user_1.email)
       expect(page).to have_content(user_2.email)
       expect(page).to have_content(user_3.email)
@@ -64,12 +59,6 @@ require 'rails_helper'
       expect(page).to_not have_content(merchant_2.email)
       expect(page).to_not have_content(merchant_3.email)
       expect(page).to_not have_content(merchant_4.email)
-
-      expect(page).to_not have_content(user_5.name)
-      expect(page).to_not have_content(merchant_1.name)
-      expect(page).to_not have_content(merchant_2.name)
-      expect(page).to_not have_content(merchant_3.name)
-      expect(page).to_not have_content(merchant_4.name)
     end
 
     it 'can click the export non customer emails button' do
@@ -109,11 +98,6 @@ require 'rails_helper'
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_1)
 
       click_on("Export Non Customer Emails")
-      expect(page).to_not have_content(user_1.name)
-      expect(page).to_not have_content(user_2.name)
-      expect(page).to_not have_content(user_3.name)
-      expect(page).to_not have_content(user_4.name)
-      expect(page).to_not have_content(merchant_1.name)
 
       expect(page).to_not have_content(user_1.email)
       expect(page).to_not have_content(user_2.email)
@@ -125,10 +109,5 @@ require 'rails_helper'
       expect(page).to have_content(merchant_2.email)
       expect(page).to have_content(merchant_3.email)
       expect(page).to have_content(merchant_4.email)
-
-      expect(page).to have_content(user_5.name)
-      expect(page).to have_content(merchant_2.name)
-      expect(page).to have_content(merchant_3.name)
-      expect(page).to have_content(merchant_4.name)
     end
   end
