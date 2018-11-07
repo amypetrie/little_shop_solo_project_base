@@ -1,5 +1,35 @@
 <h1>Merchants</h1>
 
+<div class="leaderboard">
+  <div class="leaderboard_container">
+    <h2>Leaderboard</h2>
+    <div class="stat_1">
+      <p><b>Top 10 Merchants who sold the most items in the past month:</b></p>
+      <ol>
+        <% @top_selling_merchants.each do |merchant|%>
+          <li><%=merchant.name%></li>
+        <%end%>
+      </ol>
+    </div>
+    <div class="stat_2">
+      <p><b>Top 10 Merchants who fulfilled non-cancelled orders in the past month:</b></p>
+      <ol>
+        <% @most_orders_fulfilled.each do |merchant| %>
+        <li><%=merchant.name%></li>
+        <% end %>
+      </ol>
+    </div>
+    <% if current_admin? %>
+    <div class="stat_3">
+      <p><b>Top 5 fastest merchants fulfilling orders to <%=current_user.city%></b></p>
+      <ol>
+
+      </ol>
+    </div>
+    <% end %>
+  </div>
+</div>
+
 <table>
   <thead>
     <tr>
