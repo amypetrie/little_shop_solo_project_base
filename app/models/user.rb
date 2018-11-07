@@ -177,6 +177,7 @@ class User < ApplicationRecord
     })
     .where('order_items.fulfilled = true')
     .group('users.id').order('total_items DESC')
+    .limit(10)
   end
 
 
@@ -192,6 +193,7 @@ class User < ApplicationRecord
     .where('order_items.fulfilled = true')
     .group('users.id')
     .order('total_orders DESC')
+    .limit(10)
   end
 
   def customers
@@ -212,7 +214,7 @@ class User < ApplicationRecord
   end
 
   def self.to_csv
-    attributes = %w{email name}
+    attributes = %w{email}
     CSV.generate(headers: true) do |csv|
       csv << attributes
       self.all.each do |user|
