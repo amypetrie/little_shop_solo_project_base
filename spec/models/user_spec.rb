@@ -108,7 +108,7 @@ RSpec.describe User, type: :model do
 
   describe 'Instance Methods' do
 
-    xit '.order_item_ids_by_city' do
+    it '.order_items_by_city' do
         user_1, user_2 = create_list(:user, 2, city: "Chicago")
         user_3 = create(:user, city: "Denver")
 
@@ -133,10 +133,8 @@ RSpec.describe User, type: :model do
         order_5 = create(:completed_order, user: user_3)
         oi_5 = create(:fulfilled_order_item, order: order_5, item: item_4, price: 200, quantity: 1)
 
-        expect(user_1.order_items_by_city).to include(oi_1, oi_2, oi_3, oi_4)
-
-        # expect(user_1.fastest_merchants_to_user_city).to include(merchant_1, merchant_2, merchant_3, merchant_4)
-        expect(user_1.fastest_city_merchants_by_order_item).to include(merchant_1, merchant_2, merchant_3, merchant_4)
+        expect(user_1.order_items_by_city).to include(oi_1.id, oi_2.id, oi_3.id, oi_4.id)
+        expect(user_1.order_items_by_city).to_not include(oi_5.id)
     end
 
     xit 'fastest_merchants_to_user_city' do
@@ -164,7 +162,7 @@ RSpec.describe User, type: :model do
       order = create(:completed_order, user: user_3)
       create(:fulfilled_order_item, order: order, item: item_4, price: 200, quantity: 1)
 
-      expect(user_1.fastest_merchants_to_user_city).to include(merchant_1, merchant_1, merchant_3, merchant_4)
+      expect(user_1.fastest_city_merchants_by_order_item).to include(merchant_1, merchant_2, merchant_3, merchant_4)
       expect(user_1.fastest_merchants_to_user_city).to_not include(merchant_5)
     end
 

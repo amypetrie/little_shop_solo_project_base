@@ -12,47 +12,28 @@ class User < ApplicationRecord
   end
 
   def order_items_by_city
-    OrderItem.all.select('order_items.*')
-      .joins('join orders on orders.id=order_items.order_id')
-      .joins('join users on orders.user_id=users.id')
+    # WORKS
+    User.select('order_items.*')
+      .joins(orders: {order_items: :item})
       .where('orders.status != ?', :cancelled)
       .where('users.city = ?', self.city)
-    # WORKS
-    # User.select('order_items.*')
-    #   .joins(orders: {order_items: :item})
-    #   .where('orders.status != ?', :cancelled)
-    #   .where('users.city = ?', self.city)
-    #   .pluck('order_items.id')
-  end
-
-  def fastest_city_merchants_by_order_item
-    order_item_ids = self.order_items_by_city.pluck(:id)
-
-    OrderItem.all.select('items.*, users.*')
-      .joins('join items on items.id=order_items.item_id')
-      .joins('join users on items.user_id=users.id')
-      .where(id: order_item_ids)
-      .order('time')
-      .pluck('users.*')
-  end
-
-  def merchants_by_city
+      .pluck('order_items.id')
   end
 
   def fastest_merchants_to_user_city
-    order_items = self.order_items_by_city.pluck[:id]
+    order_item_ids = self.order_items_by_city.pluck(:id)
 
-      select("distinct users.*,
+    User.select("distinct users.*,
       CASE
         WHEN order_items.updated_at > order_items.created_at THEN coalesce(EXTRACT(EPOCH FROM order_items.updated_at) - EXTRACT(EPOCH FROM order_items.created_at),0)
         ELSE 1000000000 END as time_diff")
       .joins(:items)
       .joins('join order_items on items.id=order_items.item_id')
       .joins('join orders on orders.id=order_items.order_id')
-      .where('order_items.id = ?', order_items)
-      .group('orders.id, users.id, order_items.updated_at, order_items.created_at')
-      .order("time_diff #{order}")
-      .limit(quantity)
+      .where('order_items.id = ?', order_item_ids)
+      .where('orders.status != ?', :cancelled)
+      .group('users.id, order_items.updated_at, order_items.created_at')
+      .order("time_diff")
   end
 
   def merchant_orders(status=nil)
@@ -217,7 +198,6 @@ class User < ApplicationRecord
     User
     .joins(orders: {order_items: :item})
     .where('items.user_id = ?', self.id)
-    .joins(orders: :user)
     .where('users.active = true')
     .distinct
   end
